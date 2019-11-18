@@ -1,0 +1,19 @@
+#login-box {
+    width: 50%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+form {
+    padding: 0px !important;
+    margin-top: 40px;
+}
+
+.display-4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.simcir {
+    margin-bottom: 20px;
+}

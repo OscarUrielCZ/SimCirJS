@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Crea un nuevo ejercicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="assets/libs/simcir.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/libs/simcir.css" />
+        <script type="text/javascript" src="assets/libs/simcir-basicset.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/libs/simcir-basicset.css" />
+        <script type="text/javascript" src="assets/libs/simcir-library.js"></script>
+        <!--<script type="text/javascript" src="https://kazuhikoarase.github.io/simcirjs/simcir.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://kazuhikoarase.github.io/simcirjs/simcir.css" />
+        <script type="text/javascript" src="https://kazuhikoarase.github.io/simcirjs/simcir-basicset.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://kazuhikoarase.github.io/simcirjs/simcir-basicset.css" />
+        <script type="text/javascript" src="https://kazuhikoarase.github.io/simcirjs/simcir-library.js"></script>-->
+        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous" />-->
+        <link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="assets/css/workspace.css" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="display-4">Crea tu circuito</div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-12 simcir">
+                    {
+                        "width":600,
+                        "height":350
+                    }
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 card">
+                            <div class="card-body">
+                                <p class="card-text">
+                                    1. Da ctrl + click sobre el circuito<br />
+                                    2. Copia y pega la info en el area de texto <br />
+                                    3. Guarda
+                                </p>
+                            </div>
+                        </div>
+                        <form class="col-lg-12 col-md-6">
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="Copia aqui las especificaciones" rows="5" id="circuitinfo"></textarea>
+                                <input type="submit" class="form-control" id="savebtn" value="Guardar" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="assets/js/workspace.js"></script>
+    </body>
+</html>
