@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import Navbar from './Navbar';
+import global from '../global';
 
 export default class Dashboard extends Component {
     state = {
@@ -20,7 +21,7 @@ export default class Dashboard extends Component {
                     username: user.username
                 }
             });
-            fetch(`http://localhost:8090/circuits/DashboardServlet?username=${user.username}`)
+            fetch(`${global.getURL()}/DashboardServlet?username=${user.username}`)
                 .then(resp => resp.json())
                 .then(resp => {
                     this.setState({
@@ -39,7 +40,11 @@ export default class Dashboard extends Component {
                 <tr>
                     <td>{project.id}</td>
                     <td>{project.name}</td>
-                    <td>Ver|Editar|Borrar</td>
+                    <td>
+                        <Link className='p-action' to={`/view/${project.id}`} ><i class="fas fa-eye"></i></Link>
+                        <Link className='p-action' to={`/edit/${project.id}`} ><i class="fas fa-pen"></i></Link>
+                        <Link className='p-action' to={`/delete/${project.id}`} ><i class="fas fa-trash"></i></Link>
+                    </td>
                 </tr>
             );
     }

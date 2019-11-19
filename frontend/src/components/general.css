@@ -4,7 +4,7 @@
     margin-top: 40px;
 }
 
-form {
+#form-sp {
     padding: 0px !important;
     margin-top: 40px;
 }
@@ -16,4 +16,13 @@ form {
 
 .simcir {
     margin-bottom: 20px;
+}
+
+.p-action {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#circuit-view {
+    margin-top: 15px;
 }

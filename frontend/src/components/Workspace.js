@@ -12,7 +12,6 @@ export default class Workspace extends Component {
 
     componentWillMount() {
         const user = JSON.parse(localStorage.getItem('session'));
-
         if(user != null) {
             this.setState({
                 user: {
@@ -46,7 +45,7 @@ export default class Workspace extends Component {
                                         </p>
                                     </div>
                                 </div>
-                                <form className='col-lg-12 col-md-6'>
+                                <form id='form-sp' className='col-lg-12 col-md-6'>
                                     <div className='form-group'>
                                         <textarea className='form-control' placeholder='Copia aqui las especificaciones' rows='5' id='circuitinfo'></textarea>
                                         <input type='submit' className='form-control' id='savebtn' value='Guardar' />

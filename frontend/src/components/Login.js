@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import global from '../global';
 import './general.css';
 
 export default class Login extends Component {
@@ -16,7 +17,7 @@ export default class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        fetch(`http://localhost:8090/circuits/Home?username=${this.state.user.username}&password=${this.state.user.password}`)
+        fetch(`${global.getURL()}/Home?username=${this.state.user.username}&password=${this.state.user.password}`)
             .then(resp => resp.json())
             .then(resp => {
                 if(resp.ok == "true") {

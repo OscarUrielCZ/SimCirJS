@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import Workspace from './Workspace';
+import View from './View';
 
 export default class App extends Component {
     render() {
@@ -13,6 +14,7 @@ export default class App extends Component {
                     <Route exact path='/' component={ Login } />
                     <Route exact path='/dashboard' component={ Dashboard }/>
                     <Route exact path='/create' component={ Workspace } />
+                    <Route exact path='/view/:id' component={ View } />
                 </Switch>
             </BrowserRouter>
         );
