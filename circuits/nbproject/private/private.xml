@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/src/java/circuits/DashboardServlet.java</file>
             <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/src/java/circuits/Home.java</file>
-            <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/web/assets/xml/users.xml</file>
+            <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/src/java/circuits/SaveCircuit.java</file>
+            <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/src/java/circuits/GetCircuit.java</file>
+            <file>file:/C:/Users/oscar/ESCOM/simsirescom/circuits/web/assets/xml/circuits.xml</file>
         </group>
     </open-files>
 </project-private>

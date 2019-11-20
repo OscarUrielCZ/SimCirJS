@@ -9,7 +9,7 @@ export default class View extends Component {
         username: '',
         circuit: {
             name: '',
-            features: {}
+            features: {},
         }
     };
 
@@ -23,35 +23,49 @@ export default class View extends Component {
                     username: user.username,
                     circuit: {
                         name: resp.name,
-                        features: resp.features
+                        features: resp.features,
                     }
                 });
-                console.log(resp.features);
-                console.log(this.state.circuit.features);
             });
     }
 
-    getStringElements(array) {
-        let result = "[";
-        //console.log(array);
-        for(let element of array)
-            //for(let property of element)
-            console.log(`Element: ${element}`);
-        
-        result += "]";
+    getdevices() {
+        let devices = this.state.circuit.features.devices;
+        let result = '', mto = false;
+        for(let i in devices) {
+            if(mto) result += ',';
+            result += `{"type":"${devices[i].type}","id":"${devices[i].id}","x":${devices[i].x},"y":${devices[i].y},"label":"${devices[i].label}"}`;
+            mto = true;
+        }
+        return result;
+    }
 
+    getconnectors() {
+        let connectors = this.state.circuit.features.connectors;
+        let result = '', mto = false;
+        for(let i in connectors) {
+            if(mto) result += ',';
+            result += `{"from":"${connectors[i].from}","to":"${connectors[i].to}"}`;
+            mto = true;
+        }
         return result;
     }
 
     renderCircuitInfo() {
-        return (`
+        let devices = this.getdevices();
+        let connectors = this.getconnectors();
+        let data = `
             "width":650,
             "height":360,
-            "showToolBox": false,
-            "devices": ${this.getStringElements(this.state.circuit.features.devices)},
-            "connectors": ${this.getStringElements(this.state.circuit.features.connectors)}
-        `);
-            
+            "showToolbox":false,
+            "devices":[
+                ${devices}
+            ],
+            "connectors":[
+                ${connectors}
+            ]`;
+        console.log(data);
+        return data;
     }
 
     render() {

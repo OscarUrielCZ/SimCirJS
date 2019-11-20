@@ -13,6 +13,14 @@ export default class Login extends Component {
         error: false,
         redirect: false
     };
+
+    componentWillMount() {
+        const user = JSON.parse(localStorage.getItem('session'));
+        if(user != null)
+            this.setState({
+                redirect: true
+            });
+    }
     
     handleSubmit = e => {
         e.preventDefault();

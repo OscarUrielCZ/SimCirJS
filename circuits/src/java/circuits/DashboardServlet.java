@@ -49,7 +49,6 @@ public class DashboardServlet extends HttpServlet {
             e.printStackTrace();
         }
         allprojects += "] }";
-        System.out.println(allprojects);
         out.println(allprojects);
     }
 /*

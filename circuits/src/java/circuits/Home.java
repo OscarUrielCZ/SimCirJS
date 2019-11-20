@@ -37,8 +37,7 @@ public class Home extends HttpServlet {
                 Element element = (Element)userlist.get(i);
                 String usernamexml = element.getAttributeValue("username");
                 String passwordxml = element.getAttributeValue("password");
-                System.out.println(">>" + username);
-                System.out.println(">>>" + password);
+                
                 if(username.compareTo(usernamexml)==0 && password.compareTo(passwordxml)==0) {
                     HttpSession session = request.getSession();
                     

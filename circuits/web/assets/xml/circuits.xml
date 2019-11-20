@@ -1,8 +1,8 @@
 <circuits>
-    <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" username="juanpii" name="primer circuito">
+    <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" username="osquitar" name="primer circuito">
         <width>600</width>
         <height>350</height>
-        <showToolBox>true</showToolBox>
+        <showToolbox>true</showToolbox>
         <toolbox>
             <type>In</type>
             <type>Out</type>

@@ -8,6 +8,14 @@
         <servlet-name>DashboardServlet</servlet-name>
         <servlet-class>circuits.DashboardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetCircuit</servlet-name>
+        <servlet-class>circuits.GetCircuit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveCircuit</servlet-name>
+        <servlet-class>circuits.SaveCircuit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>DashboardServlet</servlet-name>
         <url-pattern>/DashboardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetCircuit</servlet-name>
+        <url-pattern>/GetCircuit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveCircuit</servlet-name>
+        <url-pattern>/SaveCircuit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
