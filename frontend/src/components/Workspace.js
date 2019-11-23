@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import uuid from 'uuid';
 
 import Navbar from './Navbar';
 import global from '../global';
@@ -10,6 +10,7 @@ export default class Workspace extends Component {
             username: ''
         },
         circuit: {
+            name: '',
             data: ''
         },
         saved: false
@@ -56,15 +57,23 @@ export default class Workspace extends Component {
         for(let i=0; i<nconnectors; i++)
             url += `cf${i}=${data.connectors[i].from}&ct${i}=${data.connectors[i].to}`;
 
-        console.log(data);
-        console.log(url);
-
         fetch(url)
             .then(resp => resp.json())
             .then(resp => {
                 console.log(resp);
             });
     };
+
+    renderArea() {
+        return (
+            <div className='simcir'>
+                {'{'}
+                    "width": 600,
+                    "height": 350                            
+                {'}'}
+            </div>
+        );
+    }
     
     render() {
         return (
@@ -73,20 +82,17 @@ export default class Workspace extends Component {
                 <div className='container'>
                     <div className='display-4'>Crea tu circuito</div>
                     <div className='row justify-content-center'>
-                        <div className='col-lg-8 col-md-12 simcir'>
-                            {'{'}
-                                "width":600,
-                                "height":350
-                            {'}'}
+                        <div className='col-lg-8 col-md-12'>
+                            { this.renderArea() }
                         </div>
                         <div className='col-lg-4 col-md-12'>
                             <div className='row'>
                                 <div className='col-lg-12 col-md-6 card'>
                                     <div className='card-body'>
-                                        <p c3lassName='card-text'>
+                                        <p className='card-text'>
                                             1. Da ctrl + click sobre el circuito<br />
-                                            2. Copia y pega la info en el area de texto <br />
-                                            3. Guarda
+                                            2. Copia y pega la info en el area<br />
+                                            3. Presiona el botón de guardar
                                         </p>
                                     </div>
                                 </div>

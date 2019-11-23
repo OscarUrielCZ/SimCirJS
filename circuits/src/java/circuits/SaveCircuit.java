@@ -1,6 +1,7 @@
 package circuits;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
+import javax.xml.parsers.*;
 import org.jdom.output.XMLOutputter;
 
 public class SaveCircuit extends HttpServlet {
@@ -21,7 +23,9 @@ public class SaveCircuit extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRealPath("/");
+        String xmlpath = path+"\\assets\\xml\\circuits.xml";
         PrintWriter out = response.getWriter();
+        
         String width = request.getParameter("width");
         String height = request.getParameter("height");
         String showToolbox = request.getParameter("showToolbox");
@@ -45,10 +49,12 @@ public class SaveCircuit extends HttpServlet {
         
         try {
             SAXBuilder builder = new SAXBuilder();
-            File circuitsXML = new File(path+"\\assets\\xml\\circuits.xml");
+            File circuitsXML = new File(xmlpath);
             
             Document circuitdocument = builder.build(circuitsXML);
-            Element root = circuitdocument.getRootElement();
+            // Document documenttemp = new Document();
+            // Element root = circuitdocument.getRootElement();
+            // List circuits = root.getChildren();
             Element circuit = new Element("circuit");
             Element widthEl = new Element("width");
             Element heightEl = new Element("height");
@@ -71,9 +77,19 @@ public class SaveCircuit extends HttpServlet {
             circuit.addContent(tbEl);
             circuit.addContent(devsEl);
             circuit.addContent(consEl);
-            root.addContent(circuit);
             
-            new XMLOutputter().output(circuitdocument, System.out);
+            circuitdocument.getRootElement().addContent(circuit);
+            //circuitdocument.setRootElement(root);
+            
+            Element circuitselement = new Element("circuits");
+            Document document = new Document(circuitselement);
+            document.getRootElement().detach();
+            circuitselement.addContent(circuit);
+            document.setRootElement(circuitselement);
+            //document.getRootElement().addContent(circuit);
+            XMLOutputter xmloutput = new XMLOutputter(Format.getPrettyFormat());
+            xmloutput.output(document, new FileWriter(xmlpath));
+            System.out.println("Salvado!");
         } catch(JDOMException e) {
             e.printStackTrace();
         }
