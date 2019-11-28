@@ -24,26 +24,59 @@
       </connector>
     </connectors>
   </circuit>
-  <circuit id="a08df1fc-7bf0-46f1-ad6c-8ec9bee6e3ff" username="undefined" name="ejemplo1">
+  <circuit id="0c7f878b-6d77-4885-9557-2dfa49464de7" username="osquitar" name="basico 1">
     <devices>
       <device>
         <id>dev0</id>
         <type>DC</type>
-        <x>112</x>
-        <y>72</y>
+        <x>104</x>
+        <y>136</y>
         <label>DC</label>
       </device>
       <device>
         <id>dev1</id>
+        <type>PushOff</type>
+        <x>200</x>
+        <y>56</y>
+        <label>PushOff</label>
+      </device>
+      <device>
+        <id>dev2</id>
         <type>LED</type>
-        <x>192</x>
-        <y>88</y>
+        <x>280</x>
+        <y>160</y>
         <label>LED</label>
+      </device>
+      <device>
+        <id>dev3</id>
+        <type>LED</type>
+        <x>280</x>
+        <y>104</y>
+        <label>LED</label>
+      </device>
+      <device>
+        <id>dev4</id>
+        <type>PushOn</type>
+        <x>200</x>
+        <y>208</y>
+        <label>PushOn</label>
       </device>
     </devices>
     <connectors>
       <connector>
         <from>dev1.in0</from>
+        <to>dev0.out0cf1=dev2.in0</to>
+      </connector>
+      <connector>
+        <from />
+        <to>dev4.out0cf2=dev3.in0</to>
+      </connector>
+      <connector>
+        <from />
+        <to>dev1.out0cf3=dev4.in0</to>
+      </connector>
+      <connector>
+        <from />
         <to>dev0.out0</to>
       </connector>
     </connectors>

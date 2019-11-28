@@ -40,12 +40,12 @@ public class DashboardServlet extends HttpServlet {
                 String namexml = element.getAttributeValue("name");
                 
                 System.out.println("id: " + idxml + " username: " + usernamexml + " name: " + namexml);
-                //if(username.compareTo(usernamexml)==0) {
+                if(username.compareTo(usernamexml)==0) {
                     if(mto)
                         allprojects += ", ";
                     allprojects += "{ \"id\": \"" + idxml + "\" , \"name\": \"" + namexml + "\" }";
                     mto = true;
-                //}
+                }
             }
         } catch(JDOMException e) {
             e.printStackTrace();

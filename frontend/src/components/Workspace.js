@@ -42,7 +42,7 @@ export default class Workspace extends Component {
         let data = JSON.parse(this.state.circuit.data);
         let ndevices = data.devices.length;
         let nconnectors = data.connectors.length;
-        let url = `${global.getURL()}/SaveCircuit?id=${uuid()}&username=${this.state.circuit.username}&name=${this.state.circuit.name}&`;
+        let url = `${global.getURL()}/SaveCircuit?id=${uuid()}&username=${this.state.user.username}&name=${this.state.circuit.name}&`;
 
         url += `ndevices=${ndevices}&`;
         url += `nconnectors=${nconnectors}&`;
