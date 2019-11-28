@@ -8,10 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class DashboardServlet extends HttpServlet {
     @Override
@@ -32,18 +32,20 @@ public class DashboardServlet extends HttpServlet {
             Element root = userdocument.getRootElement();
             List circuitlist = root.getChildren("circuit");
             
+            System.out.println("->" + circuitlist.toString());
             for(int i=0; i<circuitlist.size(); i++) {
                 Element element = (Element)circuitlist.get(i);
                 String usernamexml = element.getAttributeValue("username");
                 String idxml = element.getAttributeValue("id");
                 String namexml = element.getAttributeValue("name");
                 
-                if(username.compareTo(usernamexml)==0) {
+                System.out.println("id: " + idxml + " username: " + usernamexml + " name: " + namexml);
+                //if(username.compareTo(usernamexml)==0) {
                     if(mto)
                         allprojects += ", ";
                     allprojects += "{ \"id\": \"" + idxml + "\" , \"name\": \"" + namexml + "\" }";
                     mto = true;
-                }
+                //}
             }
         } catch(JDOMException e) {
             e.printStackTrace();

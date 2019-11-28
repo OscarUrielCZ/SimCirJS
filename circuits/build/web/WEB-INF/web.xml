@@ -16,6 +16,14 @@
         <servlet-name>SaveCircuit</servlet-name>
         <servlet-class>circuits.SaveCircuit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveCircuit</servlet-name>
+        <servlet-class>circuits.RemoveCircuit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ModifyCircuit</servlet-name>
+        <servlet-class>circuits.ModifyCircuit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>SaveCircuit</servlet-name>
         <url-pattern>/SaveCircuit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveCircuit</servlet-name>
+        <url-pattern>/RemoveCircuit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModifyCircuit</servlet-name>
+        <url-pattern>/ModifyCircuit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

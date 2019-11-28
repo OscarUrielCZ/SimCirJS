@@ -8,10 +8,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 public class GetCircuit extends HttpServlet {
     @Override
@@ -41,24 +41,11 @@ public class GetCircuit extends HttpServlet {
                 if(id.compareTo(idxml)==0) {
                     String width = element.getChildText("width");
                     String height = element.getChildText("height");
-                    String showtoolbox = element.getChildText("showToolbox");
-                    Element toolbox = element.getChild("toolbox");
                     Element devices = element.getChild("devices");
                     Element connectors = element.getChild("connectors");
                     
-                    project += "\"name\": \"" + namexml + "\", \"features\": {\"width\": \"" + width + "\" , \"height\": \"" + height + "\", \"showToolBox\": \""
-                            + showtoolbox + "\", \"toolbox\": [";
+                    project += "\"name\": \"" + namexml + "\", \"features\": {\"devices\": [";
                     
-                    List toolboxlist = toolbox.getChildren("type");
-                    for(j=0; j<toolboxlist.size(); j++) {
-                        Element tool = (Element)toolboxlist.get(j);
-                        String elementtype = tool.getText();
-                        if(mto)
-                            project += ",";
-                        project += "{ \"type\": \"" + elementtype + "\"}";
-                        mto = true;
-                    }
-                    project += "], \"devices\": [";
                     mto = false;
                     List devicelist = devices.getChildren("device");
                     for(j=0; j<devicelist.size(); j++) {

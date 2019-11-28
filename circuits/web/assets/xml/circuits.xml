@@ -1,44 +1,5 @@
 <circuits>
-    <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" username="osquitar" name="primer circuito">
-        <width>600</width>
-        <height>350</height>
-        <showToolbox>true</showToolbox>
-        <toolbox>
-            <type>In</type>
-            <type>Out</type>
-            <type>Join</type>
-            <type>DC</type>
-            <type>LED</type>
-            <type>PushOff</type>
-            <type>PushOn</type>
-            <type>Toggle</type>
-            <type>BUF</type>
-            <type>NOT</type>
-            <type>AND</type>
-            <type>NAND</type>
-            <type>OR</type>
-            <type>NOR</type>
-            <type>XOR</type>
-            <type>XNOR</type>
-            <type>OSC</type>
-            <type>7seg</type>
-            <type>16seg</type>
-            <type>4bit7seg</type>
-            <type>RotaryEncoder</type>
-            <type>BusIn</type>
-            <type>BusOut</type>
-            <type>RS-FF</type>
-            <type>JK-FF</type>
-            <type>T-FF</type>
-            <type>D-FF</type>
-            <type>8bitCounter</type>
-            <type>HalfAdder</type>
-            <type>FullAdder</type>
-            <type>4bitAdder</type>
-            <type>2to4BinaryDecoder</type>
-            <type>3to8BinaryDecoder</type>
-            <type>4to16BinaryDecoder</type>
-        </toolbox>
+    <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" name="primer circuito" username="osquitar">
         <devices>
             <device>
                 <type>DC</type>

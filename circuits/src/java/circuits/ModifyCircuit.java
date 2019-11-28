@@ -16,7 +16,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-public class SaveCircuit extends HttpServlet {
+public class ModifyCircuit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,13 +26,11 @@ public class SaveCircuit extends HttpServlet {
         
         //id para reconocer el cicruito dentro del xml
         String id = request.getParameter("id");
-        String circuitname = request.getParameter("name");
-        String username = request.getParameter("username");
         int ndevices = Integer.parseInt(request.getParameter("ndevices"));
         int nconnectors = Integer.parseInt(request.getParameter("nconnectors"));
         Device[] devices = new Device[ndevices];
         Connector[] connectors = new Connector[nconnectors];
-        int i, j;
+        int i, j, k;
         
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.setContentType("application/json;charset=UTF-8");
@@ -50,27 +48,17 @@ public class SaveCircuit extends HttpServlet {
             
             List<Element> circuitos = raiz.getChildren(); //Se obtiene el arreglo de circuitos del archivo
             
-            //for(k=0; k<circuitos.size(); k++){
-            //    String idxml = circuitos.get(k).getAttributeValue("id");
+            for(k=0; k<circuitos.size(); k++){
+                String idxml = circuitos.get(k).getAttributeValue("id");
                 //Se compara la id del circuito que se quiere modificar con la de los circuitos existentes
-            //    if(idxml.equals(id)){
-            //        List<Element> datos = circuitos.get(k).getChildren();
+                if(idxml.equals(id)){
+                    List<Element> datos = circuitos.get(k).getChildren();
                     //Se borran los datos de <devices> del xml
-            //        datos.get(4).removeContent();
+                    datos.get(4).removeContent();
                     //Se borran los datos de <connectors>
-            //        datos.get(5).removeContent();
+                    datos.get(5).removeContent();
                     //LLenar XML
                     //Circuito c = obtenerCircuito(id_circuito, listaCircuitos);
-                
-                Element newcirc = new Element("circuit");
-                Element newdevs = new Element("devices");
-                Element newcons = new Element("connectors");
-                
-                newcirc.setAttribute("id", id);
-                newcirc.setAttribute("username", username);
-                newcirc.setAttribute("name", circuitname);
-                newcirc.addContent(newdevs);
-                newcirc.addContent(newcons);
                 
                     for(j=0; j< ndevices; j++){
                         Element newDevice = new Element("device");
@@ -86,14 +74,13 @@ public class SaveCircuit extends HttpServlet {
                         y.setText(devices[j].getY());
                         label.setText(devices[j].getLabel());
 
-                        newDevice.addContent(idD);
+                        newDevice.addContent(id);
                         newDevice.addContent(type);
                         newDevice.addContent(x);
                         newDevice.addContent(y);
                         newDevice.addContent(label);
 
-                        //datos.get(4).addContent(newDevice);
-                        newdevs.addContent(newDevice);
+                        datos.get(4).addContent(newDevice);
                     }
 
                     for(j=0; j< nconnectors;  j++){
@@ -107,13 +94,10 @@ public class SaveCircuit extends HttpServlet {
                         newConnector.addContent(from);
                         newConnector.addContent(to);
                         
-                        //datos.get(5).addContent(newConnector);
-                        newcons.addContent(newConnector);
+                        datos.get(5).addContent(newConnector);
                     }
-                    //circuitos.add(newcirc);
-                    raiz.addContent(newcirc);
-            //    }
-            //}
+                }
+            }
             XMLOutputter outputter = new XMLOutputter( Format.getPrettyFormat() );
             //Se reescribe el archivo circuits.xml
             outputter.output(circuitdocument, new FileOutputStream(xmlpath));

@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import global from '../global';
 import './general.css';
 
-export default class View extends Component {
+export default class Modufy extends Component {
     state = {
         username: '',
         circuit: {
@@ -72,13 +72,14 @@ export default class View extends Component {
                             {'{'}
                                 "width":650,
                                 "height":360,
-                                "showToolbox":false,
+                                "showToolbox":true,
                                 "devices":[{this.getdevices()}],
                                 "connectors":[{this.getconnectors()}] 
                             {'}'}
-                            {/* {'{'}"width":650, "height":360, "showToolbox":false, "devices":[{'{'}"type":"DC","id":"dev0","x":120,"y":128,"label":"DC"{'}'},{'{'}"type":"LED","id":"dev1","x":216,"y":128,"label":"LED"{'}'}], "connectors":[{'{'}"from":"dev1.in0","to":"dev0.out0"{'}'}]{'}'} */}
+                        {/* {'{'}"width":650, "height":360, "showToolbox":true, "devices":[{'{'}"type":"DC","id":"dev0","x":120,"y":128,"label":"DC"{'}'},{'{'}"type":"LED","id":"dev1","x":216,"y":128,"label":"LED"{'}'}], "connectors":[{'{'}"from":"dev1.in0","to":"dev0.out0"{'}'}]{'}'}  */}
                         </div>
-                        <h3 className='text-right'>{this.state.circuit.name}</h3>
+                        <input type="text" value={this.state.circuit.name} />
+                        <input type="button" value="Guardar" className="btn btn-info" />
                     </center>
                 </div>
             </div>

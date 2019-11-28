@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import uuid from 'uuid';
 
 import Navbar from './Navbar';
@@ -11,7 +12,7 @@ export default class Workspace extends Component {
         },
         circuit: {
             name: '',
-            data: ''
+            data: '',
         },
         saved: false
     };
@@ -30,6 +31,7 @@ export default class Workspace extends Component {
     handleChange = e => {
         this.setState({
             circuit: {
+                ...this.state.circuit,
                 [e.target.name]: e.target.value
             }
         });
@@ -38,20 +40,13 @@ export default class Workspace extends Component {
     handleSubmit = e => {
         e.preventDefault();
         let data = JSON.parse(this.state.circuit.data);
-        let width = data.width;
-        let height = data.height;
-        let showToolbox = data.showToolbox;
-        let ntoolbox = data.toolbox.length;
         let ndevices = data.devices.length;
         let nconnectors = data.connectors.length;
-        let url = `${global.getURL()}/SaveCircuit?width=${width}&height=${height}&showToolbox=${showToolbox}&`;
+        let url = `${global.getURL()}/SaveCircuit?id=${uuid()}&username=${this.state.circuit.username}&name=${this.state.circuit.name}&`;
 
-        url += `ntoolbox=${ntoolbox}&`;
         url += `ndevices=${ndevices}&`;
         url += `nconnectors=${nconnectors}&`;
 
-        for(let i=0; i<ntoolbox; i++)
-            url += `tb${i}=${data.toolbox[i].type}&`;
         for(let i=0; i<ndevices; i++)
             url += `dt${i}=${data.devices[i].type}&di${i}=${data.devices[i].id}&dl${i}=${data.devices[i].label}&dx${i}=${data.devices[i].x}&dy${i}=${data.devices[i].y}&`;
         for(let i=0; i<nconnectors; i++)
@@ -60,7 +55,7 @@ export default class Workspace extends Component {
         fetch(url)
             .then(resp => resp.json())
             .then(resp => {
-                console.log(resp);
+                <Redirect to='/dashboard' />
             });
     };
 
