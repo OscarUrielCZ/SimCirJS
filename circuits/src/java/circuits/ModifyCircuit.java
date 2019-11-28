@@ -26,6 +26,7 @@ public class ModifyCircuit extends HttpServlet {
         
         //id para reconocer el cicruito dentro del xml
         String id = request.getParameter("id");
+        String name = request.getParameter("name");
         int ndevices = Integer.parseInt(request.getParameter("ndevices"));
         int nconnectors = Integer.parseInt(request.getParameter("nconnectors"));
         Device[] devices = new Device[ndevices];
@@ -53,10 +54,12 @@ public class ModifyCircuit extends HttpServlet {
                 //Se compara la id del circuito que se quiere modificar con la de los circuitos existentes
                 if(idxml.equals(id)){
                     List<Element> datos = circuitos.get(k).getChildren();
+                    circuitos.get(k).removeAttribute("name");
+                    circuitos.get(k).setAttribute("name", name);
                     //Se borran los datos de <devices> del xml
-                    datos.get(4).removeContent();
+                    datos.get(0).removeContent();
                     //Se borran los datos de <connectors>
-                    datos.get(5).removeContent();
+                    datos.get(1).removeContent();
                     //LLenar XML
                     //Circuito c = obtenerCircuito(id_circuito, listaCircuitos);
                 
@@ -74,13 +77,13 @@ public class ModifyCircuit extends HttpServlet {
                         y.setText(devices[j].getY());
                         label.setText(devices[j].getLabel());
 
-                        newDevice.addContent(id);
+                        newDevice.addContent(idD);
                         newDevice.addContent(type);
                         newDevice.addContent(x);
                         newDevice.addContent(y);
                         newDevice.addContent(label);
 
-                        datos.get(4).addContent(newDevice);
+                        datos.get(0).addContent(newDevice);
                     }
 
                     for(j=0; j< nconnectors;  j++){
@@ -94,17 +97,18 @@ public class ModifyCircuit extends HttpServlet {
                         newConnector.addContent(from);
                         newConnector.addContent(to);
                         
-                        datos.get(5).addContent(newConnector);
+                        datos.get(1).addContent(newConnector);
                     }
                 }
             }
             XMLOutputter outputter = new XMLOutputter( Format.getPrettyFormat() );
-            //Se reescribe el archivo circuits.xml
             outputter.output(circuitdocument, new FileOutputStream(xmlpath));
+            out.println("{ \"ok\" : true, \"name\": \"" + name + "\" }");
         } catch(JDOMException e) {
             e.printStackTrace();
+            out.println("{ \"ok\" : false }");
         }
-        out.println("{ \"ok\" : true }");
+        
     }
 }
 

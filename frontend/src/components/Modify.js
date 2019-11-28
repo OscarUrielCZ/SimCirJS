@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Navbar from './Navbar';
+import Library from './Library';
+
 import global from '../global';
 import './general.css';
 
 export default class Modufy extends Component {
     state = {
-        username: '',
+        user: {
+            username: ''
+        },
         circuit: {
             name: '',
+            data: '',
             features: {},
             devices: '',
             connectors: ''
-        }
+        },
+        redirect: false
     };
 
     componentWillMount() {
@@ -26,21 +33,66 @@ export default class Modufy extends Component {
                     circuit: {
                         name: resp.name,
                         features: resp.features,
+                        devices: this.getdevices(resp.features.devices),
+                        connectors: this.getconnectors(resp.features.connectors)
                     }
                 });
-            }).then(resp => {
+            })
+            .then(() => {
                 this.setState({
                     circuit: {
                         ...this.state.circuit,
-                        devices: this.getdevices(),
-                        connectors: this.getconnectors()
+                        data: `{
+"width": 600,
+"height": 350,
+"devices": [ ${ this.state.circuit.devices } ],
+"connectors": [ ${ this.state.circuit.connectors } ]
+}`
                     }
                 });
             });
     }
 
-    getdevices() {
-        let devices = this.state.circuit.features.devices;
+    handleSubmit = e => {
+        e.preventDefault();
+        let data = JSON.parse(this.state.circuit.data);
+        let ndevices = data.devices.length;
+        let nconnectors = data.connectors.length;
+        let url = `${global.getURL()}/ModifyCircuit?id=${this.props.match.params.id}&username=${this.state.user.username}&name=${this.state.circuit.name}&`;
+
+        url += `ndevices=${ndevices}&`;
+        url += `nconnectors=${nconnectors}&`;
+
+        for(let i=0; i<ndevices; i++)
+            url += `dt${i}=${data.devices[i].type}&di${i}=${data.devices[i].id}&dl${i}=${data.devices[i].label}&dx${i}=${data.devices[i].x}&dy${i}=${data.devices[i].y}&`;
+        for(let i=0; i<nconnectors; i++)
+            url += `cf${i}=${data.connectors[i].from}&ct${i}=${data.connectors[i].to}`;
+
+        fetch(url)
+            .then(resp => resp.json())
+            .then(resp => {
+                if(resp.ok) {
+                    alert(`${resp.name} actualizado exitosamente`);
+                    this.setState({
+                        redirect: true
+                    })
+                } else {
+                    alert('Algo salió mal, vuelve a intentar');
+                }
+            });
+    };
+
+    handleChange = e => {
+        this.setState({
+            circuit: {
+                ...this.state.circuit,
+                [e.target.name]: e.target.value
+            }
+        });
+    };
+
+    getdevices(devices) {
+        // let devices = this.state.circuit.features.devices;
         let result = '', mto = false;
         for(let i in devices) {
             if(mto) result += ',';
@@ -50,37 +102,45 @@ export default class Modufy extends Component {
         return result;
     }
 
-    getconnectors() {
-        let connectors = this.state.circuit.features.connectors;
+    getconnectors(connectors) {
+        // let connectors = this.state.circuit.features.connectors;
         let result = '', mto = false;
         for(let i in connectors) {
             if(mto) result += ',';
             result += `{"from":"${connectors[i].from}","to":"${connectors[i].to}"}`;
             mto = true;
         }
-        console.log(result);
         return result;
+    }
+
+    renderRedirect() {
+        if(this.state.redirect)
+            return <Redirect to='/dashboard' />;
     }
 
     render() {
         return (
             <div>
-                <Navbar username={this.state.username}/>
+                <Navbar username={this.state.user.username} />
+                { this.renderRedirect() }
                 <div className='container'>
-                    <center>
-                        <div id='circuit-view' className='simcir'>
-                            {'{'}
-                                "width":650,
-                                "height":360,
-                                "showToolbox":true,
-                                "devices":[{this.getdevices()}],
-                                "connectors":[{this.getconnectors()}] 
-                            {'}'}
-                        {/* {'{'}"width":650, "height":360, "showToolbox":true, "devices":[{'{'}"type":"DC","id":"dev0","x":120,"y":128,"label":"DC"{'}'},{'{'}"type":"LED","id":"dev1","x":216,"y":128,"label":"LED"{'}'}], "connectors":[{'{'}"from":"dev1.in0","to":"dev0.out0"{'}'}]{'}'}  */}
+                    <div className='display-4'>Modifica tu circuito</div>
+                    <div className='row justify-content-center'>
+                        <div className='col-lg-8 col-md-12'>
+                            <Library showToolbox={ "true" } devices={this.state.circuit.devices} connectors={this.state.circuit.connectors} />
                         </div>
-                        <input type="text" value={this.state.circuit.name} />
-                        <input type="button" value="Guardar" className="btn btn-info" />
-                    </center>
+                        <div className='col-lg-4 col-md-12'>
+                            <form onSubmit={this.handleSubmit} id='form-sp' className='col-lg-12 col-md-12'>
+                                <div className='form-group'>
+                                    <input type='text' name='name' className='form-control' value={this.state.circuit.name} placeholder='Nuevo nombre del circuito' onChange={this.handleChange} />
+                                </div>
+                                <div className='form-group'>
+                                    <textarea className='form-control' value={this.state.circuit.data} placeholder='Copia aqui las nuevas especificaciones' rows='9' id='circuitinfo' name='data' onChange={this.handleChange}></textarea>
+                                </div>
+                                <input type='submit' className='form-control' id='savebtn' value='Guardar' />
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

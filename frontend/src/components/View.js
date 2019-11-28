@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 
+// import '../libs/simcir';
+// import '../libs/simcir.css';
+// import '../libs/simcir-basicset';
+// import '../libs/simcir-basicset.css';
+// import '../libs/simcir-library';
+
 import Navbar from './Navbar';
+import Library from './Library';
 import global from '../global';
 import './general.css';
+
 
 export default class View extends Component {
     state = {
@@ -26,21 +34,16 @@ export default class View extends Component {
                     circuit: {
                         name: resp.name,
                         features: resp.features,
-                    }
-                });
-            }).then(resp => {
-                this.setState({
-                    circuit: {
-                        ...this.state.circuit,
-                        devices: this.getdevices(),
-                        connectors: this.getconnectors()
+                        devices: this.getdevices(resp.features.devices),
+                        connectors: this.getconnectors(resp.features.connectors)
                     }
                 });
             });
     }
 
-    getdevices() {
-        let devices = this.state.circuit.features.devices;
+    getdevices(devices) {
+        // let devices = resp.features.devices;    
+        // let devices = this.state.circuit.features.devices;
         let result = '', mto = false;
         for(let i in devices) {
             if(mto) result += ',';
@@ -50,8 +53,9 @@ export default class View extends Component {
         return result;
     }
 
-    getconnectors() {
-        let connectors = this.state.circuit.features.connectors;
+    getconnectors(connectors) {
+        // let connectors = resp.features.connectors;
+        // let connectors = this.state.circuit.features.connectors;
         let result = '', mto = false;
         for(let i in connectors) {
             if(mto) result += ',';
@@ -62,22 +66,36 @@ export default class View extends Component {
         return result;
     }
 
+    renderArea() {
+        let info = `
+            "width": 600,
+            "height": 350,
+            "showToolbox": false,
+            "devices": [ ${ this.state.circuit.devices } ],
+            "connectors": [ ${ this.state.circuit.connectors } ]
+            `;
+        console.log(info);
+        return (
+            <div id='circuit-view' className='simcir'>
+                {'{'}
+                    { info }
+                {'}'}
+            </div>
+        );
+    }
+
+    renderLibrary() {
+        //if(this.state.circuit.devices != '' && this.state.circuit.connectors != '')
+            return <Library showToolbox={ "false" } devices={this.state.circuit.devices} connectors={this.state.circuit.connectors} />
+    }
+
     render() {
         return (
             <div>
-                <Navbar username={this.state.username}/>
+                <Navbar username={this.state.username} />
                 <div className='container'>
                     <center>
-                        <div id='circuit-view' className='simcir'>
-                            {'{'}
-                                "width":650,
-                                "height":360,
-                                "showToolbox":false,
-                                "devices":[{this.getdevices()}],
-                                "connectors":[{this.getconnectors()}] 
-                            {'}'}
-                            {/* {'{'}"width":650, "height":360, "showToolbox":false, "devices":[{'{'}"type":"DC","id":"dev0","x":120,"y":128,"label":"DC"{'}'},{'{'}"type":"LED","id":"dev1","x":216,"y":128,"label":"LED"{'}'}], "connectors":[{'{'}"from":"dev1.in0","to":"dev0.out0"{'}'}]{'}'} */}
-                        </div>
+                        { this.renderLibrary() }
                         <h3 className='text-right'>{this.state.circuit.name}</h3>
                     </center>
                 </div>

@@ -38,29 +38,21 @@ public class RemoveCircuit extends HttpServlet {
             
             List<Element> circuitos = raiz.getChildren();
             
-            raiz.removeContent();
             for(k=0; k<circuitos.size(); k++){
                 String idxml = circuitos.get(k).getAttributeValue("id");
+                String namexml = circuitos.get(k).getAttributeValue("name");
                 
-                if(!id.equals(idxml)){
-                    raiz.addContent(circuitos.get(k));
-                    
-                    //List<Element> datos = circuitos.get(k).getChildren();
-                    //Se borran los datos de <devices> del xml
-                    //datos.get(4).removeContent();
-                    //Se borran los datos de <connectors>
-                    //datos.get(5).removeContent();
-                    //LLenar XML
-                    //Circuito c = obtenerCircuito(id_circuito, listaCircuitos);
-                
+                if(id.equals(idxml)){
+                    raiz.removeContent(circuitos.get(k));
+                    out.println("{ \"ok\" : true, \"name\": \"" + namexml + "\" }");
+                    break;
                 }
             }
             XMLOutputter outputter = new XMLOutputter( Format.getPrettyFormat() );
-            //Se reescribe el archivo circuits.xml
             outputter.output(circuitdocument, new FileOutputStream(xmlpath));
         } catch(JDOMException e) {
             e.printStackTrace();
+            out.println("{ \"ok\" : false }");
         }
-        out.println("{ \"ok\" : true }");
     }
 }

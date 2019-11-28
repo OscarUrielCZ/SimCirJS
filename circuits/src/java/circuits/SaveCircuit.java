@@ -50,77 +50,60 @@ public class SaveCircuit extends HttpServlet {
             
             List<Element> circuitos = raiz.getChildren(); //Se obtiene el arreglo de circuitos del archivo
             
-            //for(k=0; k<circuitos.size(); k++){
-            //    String idxml = circuitos.get(k).getAttributeValue("id");
-                //Se compara la id del circuito que se quiere modificar con la de los circuitos existentes
-            //    if(idxml.equals(id)){
-            //        List<Element> datos = circuitos.get(k).getChildren();
-                    //Se borran los datos de <devices> del xml
-            //        datos.get(4).removeContent();
-                    //Se borran los datos de <connectors>
-            //        datos.get(5).removeContent();
-                    //LLenar XML
-                    //Circuito c = obtenerCircuito(id_circuito, listaCircuitos);
-                
-                Element newcirc = new Element("circuit");
-                Element newdevs = new Element("devices");
-                Element newcons = new Element("connectors");
-                
-                newcirc.setAttribute("id", id);
-                newcirc.setAttribute("username", username);
-                newcirc.setAttribute("name", circuitname);
-                newcirc.addContent(newdevs);
-                newcirc.addContent(newcons);
-                
-                    for(j=0; j< ndevices; j++){
-                        Element newDevice = new Element("device");
-                        Element idD = new Element("id");
-                        Element type = new Element("type");
-                        Element x = new Element("x");
-                        Element y = new Element("y");
-                        Element label = new Element("label");
+            Element newcirc = new Element("circuit");
+            Element newdevs = new Element("devices");
+            Element newcons = new Element("connectors");
 
-                        idD.setText(devices[j].getId());
-                        type.setText(devices[j].getType());
-                        x.setText(devices[j].getX());
-                        y.setText(devices[j].getY());
-                        label.setText(devices[j].getLabel());
+            newcirc.setAttribute("id", id);
+            newcirc.setAttribute("username", username);
+            newcirc.setAttribute("name", circuitname);
+            newcirc.addContent(newdevs);
+            newcirc.addContent(newcons);
 
-                        newDevice.addContent(idD);
-                        newDevice.addContent(type);
-                        newDevice.addContent(x);
-                        newDevice.addContent(y);
-                        newDevice.addContent(label);
+            for(j=0; j< ndevices; j++){
+                Element newDevice = new Element("device");
+                Element idD = new Element("id");
+                Element type = new Element("type");
+                Element x = new Element("x");
+                Element y = new Element("y");
+                Element label = new Element("label");
 
-                        //datos.get(4).addContent(newDevice);
-                        newdevs.addContent(newDevice);
-                    }
+                idD.setText(devices[j].getId());
+                type.setText(devices[j].getType());
+                x.setText(devices[j].getX());
+                y.setText(devices[j].getY());
+                label.setText(devices[j].getLabel());
+                newDevice.addContent(idD);
+                newDevice.addContent(type);
+                newDevice.addContent(x);
+                newDevice.addContent(y);
+                newDevice.addContent(label);
 
-                    for(j=0; j< nconnectors;  j++){
-                        Element newConnector = new Element("connector");
-                        Element from = new Element("from");
-                        Element to = new Element("to");
+                newdevs.addContent(newDevice);
+            }
 
-                        from.setText(connectors[j].getFrom());
-                        to.setText(connectors[j].getTo());
+            for(j=0; j< nconnectors;  j++){
+                Element newConnector = new Element("connector");
+                Element from = new Element("from");
+                Element to = new Element("to");
 
-                        newConnector.addContent(from);
-                        newConnector.addContent(to);
-                        
-                        //datos.get(5).addContent(newConnector);
-                        newcons.addContent(newConnector);
-                    }
-                    //circuitos.add(newcirc);
-                    raiz.addContent(newcirc);
-            //    }
-            //}
+                from.setText(connectors[j].getFrom());
+                to.setText(connectors[j].getTo());
+                newConnector.addContent(from);
+                newConnector.addContent(to);
+
+                newcons.addContent(newConnector);
+            }
+            
+            raiz.addContent(newcirc);
+            
             XMLOutputter outputter = new XMLOutputter( Format.getPrettyFormat() );
-            //Se reescribe el archivo circuits.xml
             outputter.output(circuitdocument, new FileOutputStream(xmlpath));
+            out.println("{ \"ok\" : true }");
         } catch(JDOMException e) {
             e.printStackTrace();
+            out.println("{ \"ok\" : false }");
         }
-        out.println("{ \"ok\" : true }");
     }
 }
 

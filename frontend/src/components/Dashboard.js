@@ -9,7 +9,8 @@ export default class Dashboard extends Component {
         user: {
             username: '',
             projects: []
-        }
+        },
+        redirect: false
     };
 
     componentWillMount() {
@@ -35,12 +36,15 @@ export default class Dashboard extends Component {
         }
     }
 
-    removeCircuit = id => {
-        
+    removeCircuit(id) {
         if(confirm('¿Seguro que quieres borrar el proyecto?')) {
             fetch(`${global.getURL()}/RemoveCircuit?id=${id}`)
+            .then(resp => resp.json())
             .then(resp => {
-                window.location.reload();
+                if(resp.ok) {
+                    alert(`Se ha eliminado el proyecto ${resp.name}`);
+                    window.location.reload();
+                }
             });
         }
     }
@@ -53,7 +57,7 @@ export default class Dashboard extends Component {
                 <td>
                     <Link className='p-action' to={`/view/${project.id}`} ><i class="fas fa-eye">Ver</i></Link>
                     <Link className='p-action' to={`/modify/${project.id}`} ><i class="fas fa-pen">Editar</i></Link>
-                    <Link className='p-action' to={`/delete/${project.id}`} ><i class="fas fa-trash">Borrar</i></Link>
+                    <Link className='p-action' onClick={ () => { this.removeCircuit(project.id) } } ><i class="fas fa-trash">Borrar</i></Link>
                 </td>
             </tr>
         );

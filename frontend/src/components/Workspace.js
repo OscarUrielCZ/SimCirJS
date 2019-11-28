@@ -14,7 +14,7 @@ export default class Workspace extends Component {
             name: '',
             data: '',
         },
-        saved: false
+        redirect: false
     };
 
     componentWillMount() {
@@ -55,7 +55,14 @@ export default class Workspace extends Component {
         fetch(url)
             .then(resp => resp.json())
             .then(resp => {
-                <Redirect to='/dashboard' />
+                if(resp.ok) {
+                    alert(`${this.state.circuit.name} guardado exitosamente`);
+                    this.setState({
+                        redirect: true
+                    })
+                } else {
+                    alert('Algo salió mal, vuelve a intentar');
+                }
             });
     };
 
@@ -69,11 +76,17 @@ export default class Workspace extends Component {
             </div>
         );
     }
+
+    renderRedirect() {
+        if(this.state.redirect)
+            return <Redirect to="/dashboard" />;
+    }
     
     render() {
         return (
             <div>
                 <Navbar username={this.state.user.username} />
+                { this.renderRedirect() }
                 <div className='container'>
                     <div className='display-4'>Crea tu circuito</div>
                     <div className='row justify-content-center'>
@@ -85,8 +98,8 @@ export default class Workspace extends Component {
                                 <div className='col-lg-12 col-md-6 card'>
                                     <div className='card-body'>
                                         <p className='card-text'>
-                                            1. Da ctrl + click sobre el circuito<br />
-                                            2. Copia y pega la info en el area<br />
+                                            1. Da Ctrl+click sobre el circuito<br />
+                                            2. Copia y pega la info abajo<br />
                                             3. Presiona el botón de guardar
                                         </p>
                                     </div>

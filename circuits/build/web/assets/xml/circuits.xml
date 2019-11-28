@@ -1,26 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <circuits>
-    <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" name="primer circuito" username="osquitar">
-        <devices>
-            <device>
-                <type>DC</type>
-                <id>dev0</id>
-                <x>120</x>
-                <y>128</y>
-                <label>DC</label>
-            </device>
-            <device>
-                <type>LED</type>
-                <id>dev1</id>
-                <x>216</x>
-                <y>128</y>
-                <label>LED</label>
-            </device>
-        </devices>
-        <connectors>
-            <connector>
-                <from>dev1.in0</from>
-                <to>dev0.out0</to>
-            </connector>
-        </connectors>
-    </circuit>
+  <circuit id="cb0a7fe2-6a5f-4deb-9e7d-0d7f746a76ac" name="primer circuito" username="osquitar">
+    <devices>
+      <device>
+        <type>DC</type>
+        <id>dev0</id>
+        <x>120</x>
+        <y>128</y>
+        <label>DC</label>
+      </device>
+      <device>
+        <type>LED</type>
+        <id>dev1</id>
+        <x>216</x>
+        <y>128</y>
+        <label>LED</label>
+      </device>
+    </devices>
+    <connectors>
+      <connector>
+        <from>dev1.in0</from>
+        <to>dev0.out0</to>
+      </connector>
+    </connectors>
+  </circuit>
+  <circuit id="a08df1fc-7bf0-46f1-ad6c-8ec9bee6e3ff" username="undefined" name="ejemplo1">
+    <devices>
+      <device>
+        <id>dev0</id>
+        <type>DC</type>
+        <x>112</x>
+        <y>72</y>
+        <label>DC</label>
+      </device>
+      <device>
+        <id>dev1</id>
+        <type>LED</type>
+        <x>192</x>
+        <y>88</y>
+        <label>LED</label>
+      </device>
+    </devices>
+    <connectors>
+      <connector>
+        <from>dev1.in0</from>
+        <to>dev0.out0</to>
+      </connector>
+    </connectors>
+  </circuit>
 </circuits>
